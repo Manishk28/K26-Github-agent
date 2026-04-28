@@ -21,113 +21,109 @@
       display: block;
       flex-shrink: 0;
     }
-    .quiz-card {
+    .ttt-card {
       background: rgba(10,31,51,0.85);
       border: 1px solid rgba(98,216,78,0.15);
-      border-radius: 12px;
-      box-shadow: 0 4px 24px 0 rgba(0,199,177,0.08);
-      max-width: 420px;
-      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(98,216,78,0.10);
       padding: 32px 28px 28px 28px;
-      backdrop-filter: blur(8px);
+      max-width: 370px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      backdrop-filter: blur(8px);
     }
-    .quiz-title {
-      font-size: 2rem;
+    .ttt-title {
+      font-size: 2.1rem;
       font-weight: 700;
+      margin-bottom: 18px;
       color: #62d84e;
-      margin-bottom: 8px;
+      letter-spacing: 1px;
       text-align: center;
     }
-    .quiz-question {
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #e8f4f8;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-    .quiz-option {
-      background: rgba(6,21,37,0.8);
-      border: 1px solid rgba(98,216,78,0.2);
-      color: #e8f4f8;
-      border-radius: 8px;
-      padding: 12px 18px;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
-      outline: none;
-      text-align: left;
-    }
-    .quiz-option:hover:not([disabled]), .quiz-option:focus-visible:not([disabled]) {
-      border-color: #62d84e;
-      background: rgba(98,216,78,0.08);
-      color: #62d84e;
-      box-shadow: 0 0 0 2px #62d84e33;
-    }
-    .quiz-option[disabled] {
-      opacity: 0.7;
-      cursor: default;
-    }
-    .quiz-feedback {
+    .ttt-status {
       font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 8px;
+      font-weight: 500;
+      color: #e8f4f8;
+      margin-bottom: 18px;
       min-height: 28px;
       text-align: center;
+      transition: color 0.2s;
     }
-    .quiz-feedback.correct {
-      color: #62d84e;
+    .ttt-board {
+      display: grid;
+      grid-template-columns: repeat(3, 64px);
+      grid-template-rows: repeat(3, 64px);
+      gap: 10px;
+      margin-bottom: 22px;
     }
-    .quiz-feedback.incorrect {
-      color: #ff5c5c;
-    }
-    .quiz-score {
-      font-size: 1.2rem;
+    .ttt-cell {
+      width: 64px;
+      height: 64px;
+      background: rgba(6,21,37,0.8);
+      border: 2px solid rgba(98,216,78,0.2);
+      border-radius: 10px;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: #00c7b1;
-      margin-top: 12px;
-      text-align: center;
+      color: #e8f4f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      user-select: none;
+      outline: none;
     }
-    .quiz-btn {
+    .ttt-cell.winner {
+      background: linear-gradient(135deg, #62d84e, #00c7b1);
+      color: #061525;
+      border-color: #62d84e;
+      box-shadow: 0 0 12px #62d84e88;
+      animation: winner-glow 1s infinite alternate;
+    }
+    @keyframes winner-glow {
+      from { box-shadow: 0 0 12px #62d84e88; }
+      to { box-shadow: 0 0 24px #00c7b188; }
+    }
+    .ttt-reset-btn {
       background: linear-gradient(135deg, #62d84e, #00c7b1);
       color: #061525;
       font-weight: 700;
-      border-radius: 10px;
-      padding: 12px 24px;
       border: none;
-      font-size: 1rem;
-      margin-top: 18px;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 1.1rem;
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 2px 8px 0 rgba(98,216,78,0.12);
+      margin-top: 8px;
+      box-shadow: 0 2px 8px rgba(98,216,78,0.10);
+      transition: transform 0.1s, box-shadow 0.2s;
     }
-    .quiz-btn:hover, .quiz-btn:focus-visible {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(98,216,78,0.25);
+    .ttt-reset-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 4px 16px #00c7b144;
     }
-    @media (max-width: 600px) {
-      .quiz-card {
+    @media (max-width: 500px) {
+      .ttt-card {
         padding: 18px 6px 16px 6px;
         max-width: 98vw;
       }
-      .quiz-title {
+      .ttt-board {
+        grid-template-columns: repeat(3, 48px);
+        grid-template-rows: repeat(3, 48px);
+        gap: 7px;
+      }
+      .ttt-cell {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+      }
+      .ttt-title {
         font-size: 1.3rem;
       }
-      .quiz-question {
+      .ttt-reset-btn {
         font-size: 1rem;
-      }
-      .quiz-score {
-        font-size: 1rem;
+        padding: 10px 18px;
       }
     }
   </style>
@@ -135,136 +131,101 @@
 <body>
   <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/header-banner.jpg" class="header-img" alt="Header" style="min-height:140px; background:#061525;" />
   <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
-    <div class="quiz-card" id="quiz-card">
-      <div class="quiz-title">ServiceNow Releases Quiz</div>
-      <div class="quiz-question" id="quiz-question"></div>
-      <div class="quiz-options" id="quiz-options"></div>
-      <div class="quiz-feedback" id="quiz-feedback"></div>
-      <div class="quiz-score" id="quiz-score"></div>
-      <button class="quiz-btn" id="quiz-next-btn" style="display:none;">Next Question</button>
-      <button class="quiz-btn" id="quiz-restart-btn" style="display:none;">Play Again</button>
+    <div class="ttt-card">
+      <div class="ttt-title">Tic-Tac-Toe</div>
+      <div id="ttt-status" class="ttt-status">Player X's turn</div>
+      <div id="ttt-board" class="ttt-board">
+        <div class="ttt-cell" data-index="0" tabindex="0"></div>
+        <div class="ttt-cell" data-index="1" tabindex="0"></div>
+        <div class="ttt-cell" data-index="2" tabindex="0"></div>
+        <div class="ttt-cell" data-index="3" tabindex="0"></div>
+        <div class="ttt-cell" data-index="4" tabindex="0"></div>
+        <div class="ttt-cell" data-index="5" tabindex="0"></div>
+        <div class="ttt-cell" data-index="6" tabindex="0"></div>
+        <div class="ttt-cell" data-index="7" tabindex="0"></div>
+        <div class="ttt-cell" data-index="8" tabindex="0"></div>
+      </div>
+      <button id="ttt-reset" class="ttt-reset-btn">Reset Game</button>
     </div>
   </div>
   <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/footer-banner.jpg" class="footer-img" alt="Footer" style="min-height:28px; background:#0a1f33;" />
   <script>
-    // ServiceNow Releases Quiz Game
-    const quizData = [
-      {
-        question: "Which ServiceNow release introduced Flow Designer?",
-        options: [
-          "Istanbul (2017)",
-          "Kingston (2018)",
-          "London (2018)",
-          "Madrid (2019)"
-        ],
-        answer: 1
-      },
-      {
-        question: "What is the codename for the ServiceNow release in Q1 2023?",
-        options: [
-          "San Diego",
-          "Tokyo",
-          "Utah",
-          "Vancouver"
-        ],
-        answer: 2
-      },
-      {
-        question: "Which feature was first introduced in the Paris release?",
-        options: [
-          "Virtual Agent",
-          "Predictive Intelligence",
-          "Mobile Agent App",
-          "AI Search"
-        ],
-        answer: 3
-      },
-      {
-        question: "Which release marked the introduction of the Now Experience UI Framework?",
-        options: [
-          "Orlando (2020)",
-          "Paris (2020)",
-          "Quebec (2021)",
-          "Rome (2021)"
-        ],
-        answer: 2
-      },
-      {
-        question: "What is the main focus of the San Diego release?",
-        options: [
-          "Next Experience UI",
-          "Flow Designer",
-          "Predictive Intelligence",
-          "IntegrationHub"
-        ],
-        answer: 0
-      }
+    // --- JAVASCRIPT FIRST ---
+    const board = Array(9).fill(null);
+    let currentPlayer = 'X';
+    let gameActive = true;
+    const statusDiv = document.getElementById('ttt-status');
+    const boardDiv = document.getElementById('ttt-board');
+    const resetBtn = document.getElementById('ttt-reset');
+    const cells = Array.from(document.getElementsByClassName('ttt-cell'));
+    const winCombos = [
+      [0,1,2],[3,4,5],[6,7,8], // rows
+      [0,3,6],[1,4,7],[2,5,8], // cols
+      [0,4,8],[2,4,6] // diags
     ];
-    let currentQuestion = 0;
-    let score = 0;
-    let answered = false;
-    const questionEl = document.getElementById('quiz-question');
-    const optionsEl = document.getElementById('quiz-options');
-    const feedbackEl = document.getElementById('quiz-feedback');
-    const scoreEl = document.getElementById('quiz-score');
-    const nextBtn = document.getElementById('quiz-next-btn');
-    const restartBtn = document.getElementById('quiz-restart-btn');
-    function showQuestion() {
-      const q = quizData[currentQuestion];
-      questionEl.textContent = q.question;
-      optionsEl.innerHTML = '';
-      feedbackEl.textContent = '';
-      feedbackEl.className = 'quiz-feedback';
-      scoreEl.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
-      nextBtn.style.display = 'none';
-      restartBtn.style.display = 'none';
-      answered = false;
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-option';
-        btn.textContent = opt;
-        btn.tabIndex = 0;
-        btn.onclick = () => selectOption(idx);
-        btn.onkeyup = (e) => { if (e.key === 'Enter' || e.key === ' ') btn.click(); };
-        optionsEl.appendChild(btn);
-      });
+    function setStatus(msg, color) {
+      statusDiv.textContent = msg;
+      statusDiv.style.color = color || '#e8f4f8';
     }
-    function selectOption(idx) {
-      if (answered) return;
-      answered = true;
-      const q = quizData[currentQuestion];
-      const optionBtns = optionsEl.querySelectorAll('.quiz-option');
-      optionBtns.forEach((btn, i) => {
-        btn.disabled = true;
-        if (i === q.answer) btn.style.borderColor = '#62d84e';
-        if (i === idx && i !== q.answer) btn.style.borderColor = '#ff5c5c';
-      });
-      if (idx === q.answer) {
-        feedbackEl.textContent = 'Correct!';
-        feedbackEl.className = 'quiz-feedback correct';
-        score++;
+    function handleCellClick(e) {
+      const idx = Number(e.target.dataset.index);
+      if (!gameActive || board[idx]) return;
+      board[idx] = currentPlayer;
+      e.target.textContent = currentPlayer;
+      e.target.classList.remove('winner');
+      const winner = checkWinner();
+      if (winner) {
+        highlightWinner(winner.combo);
+        setStatus(`Player ${winner.player} wins! 🎉`, '#62d84e');
+        gameActive = false;
+      } else if (board.every(cell => cell)) {
+        setStatus("It's a draw!", '#00c7b1');
+        gameActive = false;
       } else {
-        feedbackEl.textContent = `Incorrect. Correct answer: ${q.options[q.answer]}`;
-        feedbackEl.className = 'quiz-feedback incorrect';
-      }
-      if (currentQuestion < quizData.length - 1) {
-        nextBtn.style.display = 'inline-block';
-      } else {
-        scoreEl.textContent = `Final Score: ${score} / ${quizData.length}`;
-        restartBtn.style.display = 'inline-block';
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        setStatus(`Player ${currentPlayer}'s turn`);
       }
     }
-    nextBtn.onclick = () => {
-      currentQuestion++;
-      showQuestion();
-    };
-    restartBtn.onclick = () => {
-      currentQuestion = 0;
-      score = 0;
-      showQuestion();
-    };
-    // Start game
-    showQuestion();
+    function checkWinner() {
+      for (const combo of winCombos) {
+        const [a,b,c] = combo;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return { player: board[a], combo };
+        }
+      }
+      return null;
+    }
+    function highlightWinner(combo) {
+      for (const idx of combo) {
+        cells[idx].classList.add('winner');
+      }
+    }
+    function resetGame() {
+      for (let i=0; i<9; ++i) {
+        board[i] = null;
+        cells[i].textContent = '';
+        cells[i].classList.remove('winner');
+      }
+      currentPlayer = 'X';
+      gameActive = true;
+      setStatus("Player X's turn");
+    }
+    function handleCellKey(e) {
+      if (!gameActive) return;
+      const idx = Number(e.target.dataset.index);
+      if ((e.key === 'Enter' || e.key === ' ') && !board[idx]) {
+        handleCellClick({target: e.target});
+      }
+    }
+    cells.forEach(cell => {
+      cell.addEventListener('click', handleCellClick);
+      cell.addEventListener('keydown', handleCellKey);
+    });
+    resetBtn.addEventListener('click', resetGame);
+    // Accessibility: focus first cell on load
+    window.addEventListener('DOMContentLoaded', () => {
+      cells[0].focus();
+    });
   </script>
 </body>
 </html>
