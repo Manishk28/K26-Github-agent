@@ -21,109 +21,93 @@
       display: block;
       flex-shrink: 0;
     }
-    .ttt-card {
+    .game-card {
       background: rgba(10,31,51,0.85);
       border: 1px solid rgba(98,216,78,0.15);
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(98,216,78,0.10);
-      padding: 32px 28px 28px 28px;
-      max-width: 370px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      padding: 32px 24px;
+      max-width: 420px;
       width: 100%;
+      box-shadow: 0 0 20px rgba(98,216,78,0.25);
       display: flex;
       flex-direction: column;
       align-items: center;
-      backdrop-filter: blur(8px);
     }
-    .ttt-title {
-      font-size: 2.1rem;
+    .game-title {
+      font-size: 2rem;
       font-weight: 700;
-      margin-bottom: 18px;
       color: #62d84e;
+      margin-bottom: 12px;
       letter-spacing: 1px;
-      text-align: center;
     }
-    .ttt-status {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #e8f4f8;
+    .instructions {
+      color: #7a9bb5;
+      font-size: 1rem;
       margin-bottom: 18px;
-      min-height: 28px;
       text-align: center;
-      transition: color 0.2s;
     }
-    .ttt-board {
+    .board {
       display: grid;
-      grid-template-columns: repeat(3, 64px);
-      grid-template-rows: repeat(3, 64px);
-      gap: 10px;
-      margin-bottom: 22px;
+      grid-template-columns: repeat(3, 60px);
+      grid-template-rows: repeat(3, 60px);
+      gap: 12px;
+      margin-bottom: 18px;
     }
-    .ttt-cell {
-      width: 64px;
-      height: 64px;
+    .cell {
       background: rgba(6,21,37,0.8);
-      border: 2px solid rgba(98,216,78,0.2);
-      border-radius: 10px;
-      font-size: 2.2rem;
-      font-weight: 700;
+      border: 1px solid rgba(98,216,78,0.2);
       color: #e8f4f8;
+      border-radius: 8px;
+      font-size: 2.2rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      user-select: none;
-      outline: none;
+      transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 0 8px rgba(98,216,78,0.08);
     }
-    .ttt-cell.winner {
-      background: linear-gradient(135deg, #62d84e, #00c7b1);
-      color: #061525;
+    .cell:hover {
       border-color: #62d84e;
-      box-shadow: 0 0 12px #62d84e88;
-      animation: winner-glow 1s infinite alternate;
+      box-shadow: 0 0 12px #62d84e33;
+      transform: translateY(-2px);
     }
-    @keyframes winner-glow {
-      from { box-shadow: 0 0 12px #62d84e88; }
-      to { box-shadow: 0 0 24px #00c7b188; }
+    .status {
+      font-size: 1.1rem;
+      color: #00c7b1;
+      margin-bottom: 16px;
+      min-height: 24px;
+      text-align: center;
     }
-    .ttt-reset-btn {
+    .reset-btn {
       background: linear-gradient(135deg, #62d84e, #00c7b1);
       color: #061525;
       font-weight: 700;
-      border: none;
       border-radius: 10px;
-      padding: 12px 28px;
-      font-size: 1.1rem;
+      padding: 12px 24px;
+      border: none;
+      font-size: 1rem;
       cursor: pointer;
       margin-top: 8px;
-      box-shadow: 0 2px 8px rgba(98,216,78,0.10);
-      transition: transform 0.1s, box-shadow 0.2s;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
-    .ttt-reset-btn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 4px 16px #00c7b144;
+    .reset-btn:hover {
+      box-shadow: 0 0 16px #62d84e66;
+      transform: translateY(-2px);
     }
-    @media (max-width: 500px) {
-      .ttt-card {
-        padding: 18px 6px 16px 6px;
+    @media (max-width: 600px) {
+      .game-card {
+        padding: 18px 6px;
         max-width: 98vw;
       }
-      .ttt-board {
-        grid-template-columns: repeat(3, 48px);
-        grid-template-rows: repeat(3, 48px);
-        gap: 7px;
+      .board {
+        grid-template-columns: repeat(3, 40px);
+        grid-template-rows: repeat(3, 40px);
+        gap: 8px;
       }
-      .ttt-cell {
-        width: 48px;
-        height: 48px;
-        font-size: 1.5rem;
-      }
-      .ttt-title {
-        font-size: 1.3rem;
-      }
-      .ttt-reset-btn {
-        font-size: 1rem;
-        padding: 10px 18px;
+      .cell {
+        font-size: 1.4rem;
       }
     }
   </style>
@@ -131,101 +115,132 @@
 <body>
   <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/header-banner.jpg" class="header-img" alt="Header" style="min-height:140px; background:#061525;" />
   <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
-    <div class="ttt-card">
-      <div class="ttt-title">Tic-Tac-Toe</div>
-      <div id="ttt-status" class="ttt-status">Player X's turn</div>
-      <div id="ttt-board" class="ttt-board">
-        <div class="ttt-cell" data-index="0" tabindex="0"></div>
-        <div class="ttt-cell" data-index="1" tabindex="0"></div>
-        <div class="ttt-cell" data-index="2" tabindex="0"></div>
-        <div class="ttt-cell" data-index="3" tabindex="0"></div>
-        <div class="ttt-cell" data-index="4" tabindex="0"></div>
-        <div class="ttt-cell" data-index="5" tabindex="0"></div>
-        <div class="ttt-cell" data-index="6" tabindex="0"></div>
-        <div class="ttt-cell" data-index="7" tabindex="0"></div>
-        <div class="ttt-cell" data-index="8" tabindex="0"></div>
+    <div class="game-card">
+      <div class="game-title">Tic-Tac-Toe: User vs AI</div>
+      <div class="instructions">Take turns placing X (you) and O (AI) on the board. First to get 3 in a row wins! Click a cell to make your move. The AI will respond instantly. Click "Reset Game" to start over.</div>
+      <div class="status" id="status">Your turn! 🧞</div>
+      <div class="board" id="board">
+        <div class="cell" id="cell-0"></div>
+        <div class="cell" id="cell-1"></div>
+        <div class="cell" id="cell-2"></div>
+        <div class="cell" id="cell-3"></div>
+        <div class="cell" id="cell-4"></div>
+        <div class="cell" id="cell-5"></div>
+        <div class="cell" id="cell-6"></div>
+        <div class="cell" id="cell-7"></div>
+        <div class="cell" id="cell-8"></div>
       </div>
-      <button id="ttt-reset" class="ttt-reset-btn">Reset Game</button>
+      <button class="reset-btn" id="resetBtn">Reset Game</button>
     </div>
   </div>
   <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/footer-banner.jpg" class="footer-img" alt="Footer" style="min-height:28px; background:#0a1f33;" />
   <script>
-    // --- JAVASCRIPT FIRST ---
+    // Tic-Tac-Toe Game Logic
     const board = Array(9).fill(null);
-    let currentPlayer = 'X';
+    let userTurn = true;
     let gameActive = true;
-    const statusDiv = document.getElementById('ttt-status');
-    const boardDiv = document.getElementById('ttt-board');
-    const resetBtn = document.getElementById('ttt-reset');
-    const cells = Array.from(document.getElementsByClassName('ttt-cell'));
+    const statusDiv = document.getElementById('status');
+    const cells = Array.from({length:9}, (_,i) => document.getElementById('cell-'+i));
+    const resetBtn = document.getElementById('resetBtn');
+    const userMark = 'X';
+    const aiMark = 'O';
     const winCombos = [
       [0,1,2],[3,4,5],[6,7,8], // rows
       [0,3,6],[1,4,7],[2,5,8], // cols
-      [0,4,8],[2,4,6] // diags
+      [0,4,8],[2,4,6]          // diags
     ];
-    function setStatus(msg, color) {
-      statusDiv.textContent = msg;
-      statusDiv.style.color = color || '#e8f4f8';
-    }
-    function handleCellClick(e) {
-      const idx = Number(e.target.dataset.index);
-      if (!gameActive || board[idx]) return;
-      board[idx] = currentPlayer;
-      e.target.textContent = currentPlayer;
-      e.target.classList.remove('winner');
-      const winner = checkWinner();
-      if (winner) {
-        highlightWinner(winner.combo);
-        setStatus(`Player ${winner.player} wins! 🎉`, '#62d84e');
-        gameActive = false;
-      } else if (board.every(cell => cell)) {
-        setStatus("It's a draw!", '#00c7b1');
-        gameActive = false;
-      } else {
-        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        setStatus(`Player ${currentPlayer}'s turn`);
+    const aiTaunts = [
+      "Nice try!","I'm thinking...","Can you beat me?","AI strikes again!","Hmm...","Your move!","Let's see what you got!","🧞 says: I'm unbeatable!"
+    ];
+    function renderBoard() {
+      for(let i=0;i<9;i++) {
+        cells[i].textContent = board[i] || '';
+        cells[i].style.pointerEvents = gameActive && userTurn && !board[i] ? 'auto' : 'none';
       }
     }
-    function checkWinner() {
-      for (const combo of winCombos) {
-        const [a,b,c] = combo;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-          return { player: board[a], combo };
+    function checkWinner(mark) {
+      return winCombos.some(combo => combo.every(idx => board[idx] === mark));
+    }
+    function checkDraw() {
+      return board.every(cell => cell);
+    }
+    function setStatus(msg) {
+      statusDiv.textContent = msg;
+    }
+    function userMove(idx) {
+      if(!gameActive || !userTurn || board[idx]) return;
+      board[idx] = userMark;
+      renderBoard();
+      if(checkWinner(userMark)) {
+        setStatus("You win! 🎉");
+        gameActive = false;
+        return;
+      }
+      if(checkDraw()) {
+        setStatus("It's a draw!");
+        gameActive = false;
+        return;
+      }
+      userTurn = false;
+      setStatus("AI's turn... " + aiTaunts[Math.floor(Math.random()*aiTaunts.length)]);
+      setTimeout(aiMove, 600);
+    }
+    function aiMove() {
+      if(!gameActive) return;
+      // AI logic: win → block → center → corner → random
+      let move = findBestMove();
+      board[move] = aiMark;
+      renderBoard();
+      if(checkWinner(aiMark)) {
+        setStatus("AI wins! 🧞");
+        gameActive = false;
+        return;
+      }
+      if(checkDraw()) {
+        setStatus("It's a draw!");
+        gameActive = false;
+        return;
+      }
+      userTurn = true;
+      setStatus("Your turn! 🧞");
+    }
+    function findBestMove() {
+      // 1. Win
+      for(let i=0;i<9;i++) {
+        if(!board[i]) {
+          board[i]=aiMark;
+          if(checkWinner(aiMark)) { board[i]=null; return i; }
+          board[i]=null;
         }
       }
-      return null;
-    }
-    function highlightWinner(combo) {
-      for (const idx of combo) {
-        cells[idx].classList.add('winner');
+      // 2. Block
+      for(let i=0;i<9;i++) {
+        if(!board[i]) {
+          board[i]=userMark;
+          if(checkWinner(userMark)) { board[i]=null; return i; }
+          board[i]=null;
+        }
       }
+      // 3. Center
+      if(!board[4]) return 4;
+      // 4. Corners
+      const corners = [0,2,6,8].filter(i=>!board[i]);
+      if(corners.length) return corners[Math.floor(Math.random()*corners.length)];
+      // 5. Random
+      const empty = board.map((v,i)=>!v?i:null).filter(i=>i!==null);
+      return empty[Math.floor(Math.random()*empty.length)];
     }
     function resetGame() {
-      for (let i=0; i<9; ++i) {
-        board[i] = null;
-        cells[i].textContent = '';
-        cells[i].classList.remove('winner');
-      }
-      currentPlayer = 'X';
+      for(let i=0;i<9;i++) board[i]=null;
+      userTurn = true;
       gameActive = true;
-      setStatus("Player X's turn");
+      renderBoard();
+      setStatus("Your turn! 🧞");
     }
-    function handleCellKey(e) {
-      if (!gameActive) return;
-      const idx = Number(e.target.dataset.index);
-      if ((e.key === 'Enter' || e.key === ' ') && !board[idx]) {
-        handleCellClick({target: e.target});
-      }
-    }
-    cells.forEach(cell => {
-      cell.addEventListener('click', handleCellClick);
-      cell.addEventListener('keydown', handleCellKey);
-    });
-    resetBtn.addEventListener('click', resetGame);
-    // Accessibility: focus first cell on load
-    window.addEventListener('DOMContentLoaded', () => {
-      cells[0].focus();
-    });
+    cells.forEach((cell,i)=>cell.addEventListener('click',()=>userMove(i)));
+    resetBtn.addEventListener('click',resetGame);
+    renderBoard();
+    setStatus("Your turn! 🧞");
   </script>
 </body>
 </html>
