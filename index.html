@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ServiceNow Releases Quiz | Knowledge26 Lab</title>
+  <title>Spokes AI Agents | Knowledge26 Lab</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -21,200 +21,236 @@
       display: block;
       flex-shrink: 0;
     }
-    .quiz-wrapper {
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:40px 20px;
-    }
     .quiz-card {
-      background:rgba(10,31,51,0.85);
-      border:1px solid rgba(98,216,78,0.15);
-      border-radius:12px;
-      box-shadow:0 4px 24px rgba(0,0,0,0.18);
-      max-width:480px;
-      width:100%;
-      padding:32px 24px;
-      backdrop-filter:blur(8px);
-      display:flex;
-      flex-direction:column;
-      align-items:stretch;
+      background: rgba(10,31,51,0.85);
+      border: 1px solid rgba(98,216,78,0.15);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      max-width: 480px;
+      width: 100%;
+      padding: 32px 24px;
+      box-shadow: 0 4px 24px rgba(98,216,78,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .quiz-title {
-      font-size:2rem;
-      font-weight:700;
-      margin-bottom:18px;
-      color:#62d84e;
-      text-align:center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #62d84e;
+      text-align: center;
     }
-    .question {
-      font-size:1.2rem;
-      font-weight:600;
-      margin-bottom:16px;
-      color:#e8f4f8;
+    .quiz-question {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: #e8f4f8;
+      text-align: center;
     }
-    .options {
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-bottom:18px;
+    .quiz-options {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
     }
-    .option-btn {
-      background:linear-gradient(135deg,#62d84e,#00c7b1);
-      color:#061525;
-      font-weight:700;
-      border:none;
-      border-radius:10px;
-      padding:12px 24px;
-      cursor:pointer;
-      transition:transform 0.1s,box-shadow 0.1s;
-      font-size:1rem;
+    .quiz-option {
+      background: linear-gradient(135deg, #62d84e, #00c7b1);
+      color: #061525;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 12px 24px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+      font-size: 1rem;
+      box-shadow: 0 0 20px rgba(98,216,78,0.25);
     }
-    .option-btn:hover {
-      transform:translateY(-2px);
-      box-shadow:0 0 8px #62d84e;
+    .quiz-option:hover:not([disabled]) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px #62d84e;
     }
-    .feedback {
-      font-size:1rem;
-      font-weight:500;
-      margin-bottom:12px;
-      color:#00c7b1;
-      text-align:center;
-      min-height:24px;
+    .quiz-option[disabled] {
+      opacity: 0.6;
+      cursor: default;
     }
-    .score {
-      font-size:1.2rem;
-      font-weight:700;
-      color:#62d84e;
-      margin-bottom:18px;
-      text-align:center;
+    .quiz-feedback {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: #00c7b1;
+      min-height: 24px;
+      text-align: center;
     }
-    .restart-btn {
-      background:linear-gradient(135deg,#00c7b1,#62d84e);
-      color:#061525;
-      font-weight:700;
-      border:none;
-      border-radius:10px;
-      padding:12px 24px;
-      cursor:pointer;
-      font-size:1rem;
-      margin-top:12px;
-      transition:transform 0.1s,box-shadow 0.1s;
+    .quiz-score {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #7a9bb5;
+      margin-bottom: 20px;
+      text-align: center;
     }
-    .restart-btn:hover {
-      transform:translateY(-2px);
-      box-shadow:0 0 8px #00c7b1;
+    .quiz-restart {
+      background: linear-gradient(135deg, #62d84e, #00c7b1);
+      color: #061525;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 12px 24px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 12px;
+      box-shadow: 0 0 20px rgba(98,216,78,0.25);
+      transition: transform 0.1s, box-shadow 0.1s;
     }
-    @media (max-width:600px) {
-      .quiz-card { padding:18px 8px; }
-      .quiz-title { font-size:1.3rem; }
+    .quiz-restart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px #62d84e;
+    }
+    @media (max-width: 600px) {
+      .quiz-card {
+        padding: 18px 8px;
+        max-width: 98vw;
+      }
+      .quiz-title {
+        font-size: 1.3rem;
+      }
+      .quiz-question {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="https://github.com/Knowledge26/spokes-ai-agents/blob/main/header-banner.png" class="header-img" alt="Header" style="min-height:140px; background:#061525;" />
-  <div class="quiz-wrapper">
+  <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/header-banner.jpg" class="header-img" alt="Header" style="min-height:140px; background:#061525;" />
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
     <div class="quiz-card">
       <div class="quiz-title">ServiceNow Releases Quiz</div>
-      <div class="score" id="score"></div>
-      <div class="question" id="question"></div>
-      <div class="options" id="options"></div>
-      <div class="feedback" id="feedback"></div>
-      <button class="restart-btn" id="restartBtn" style="display:none;">Restart Quiz</button>
+      <div class="quiz-question" id="quiz-question"></div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-score" id="quiz-score"></div>
+      <button class="quiz-restart" id="quiz-restart" style="display:none;">Play Again</button>
     </div>
   </div>
-  <img src="https://github.com/Knowledge26/spokes-ai-agents/blob/main/footer-banner.png" class="footer-img" alt="Footer" style="min-height:28px; background:#0a1f33;" />
+  <img src="https://raw.githubusercontent.com/testmail-ihub/spokes-ai-assets/main/footer-banner.jpg" class="footer-img" alt="Footer" style="min-height:28px; background:#0a1f33;" />
   <script>
-    // --- JAVASCRIPT FIRST ---
-    const quizData = [
+    // ServiceNow Releases Quiz Game
+    const quizQuestions = [
       {
-        question: "What was the codename for the ServiceNow release in 2020?",
-        options: ["Orlando", "Paris", "Quebec", "Rome"],
-        answer: 0
-      },
-      {
-        question: "Which ServiceNow release introduced the Now Experience UI Framework?",
-        options: ["London", "Orlando", "Paris", "Quebec"],
-        answer: 2
-      },
-      {
-        question: "What is the primary programming language used for ServiceNow server-side scripting?",
-        options: ["Python", "JavaScript", "Java", "C#"],
+        question: "Which ServiceNow release introduced the Flow Designer?",
+        options: ["London", "Madrid", "New York", "Orlando"],
         answer: 1
       },
       {
-        question: "Which of these is NOT a ServiceNow release codename?",
-        options: ["Istanbul", "Madrid", "Berlin", "Rome"],
+        question: "What is the codename for the ServiceNow release in 2020?",
+        options: ["Paris", "Orlando", "Rome", "Quebec"],
+        answer: 3
+      },
+      {
+        question: "Which feature was first available in the ServiceNow New York release?",
+        options: ["Mobile App", "Virtual Agent", "Flow Designer", "Performance Analytics"],
+        answer: 0
+      },
+      {
+        question: "What is the main color theme of ServiceNow's UI16 interface?",
+        options: ["Green", "Blue", "Red", "Orange"],
+        answer: 0
+      },
+      {
+        question: "Which ServiceNow release introduced Agent Workspace?",
+        options: ["Madrid", "Orlando", "Paris", "Rome"],
+        answer: 1
+      },
+      {
+        question: "What is the codename for the ServiceNow release in 2022?",
+        options: ["San Diego", "Tokyo", "Utah", "Vancouver"],
         answer: 2
       },
       {
-        question: "What feature was introduced in the ServiceNow Quebec release?",
-        options: ["Flow Designer", "Virtual Agent", "App Engine Studio", "Service Portal"],
+        question: "Which ServiceNow release introduced the Now Platform App Engine?",
+        options: ["Madrid", "New York", "Orlando", "Paris"],
+        answer: 0
+      },
+      {
+        question: "What year was the ServiceNow London release launched?",
+        options: ["2017", "2018", "2019", "2020"],
+        answer: 1
+      },
+      {
+        question: "Which ServiceNow release introduced Predictive Intelligence?",
+        options: ["Madrid", "New York", "Orlando", "Paris"],
+        answer: 1
+      },
+      {
+        question: "What is the codename for the ServiceNow release in 2023?",
+        options: ["Tokyo", "Utah", "Vancouver", "Washington"],
         answer: 2
       }
     ];
-    let current = 0;
+
+    let currentQuestion = 0;
     let score = 0;
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const feedbackEl = document.getElementById('feedback');
-    const scoreEl = document.getElementById('score');
-    const restartBtn = document.getElementById('restartBtn');
+    let quizEnded = false;
+
+    const questionElem = document.getElementById('quiz-question');
+    const optionsElem = document.getElementById('quiz-options');
+    const feedbackElem = document.getElementById('quiz-feedback');
+    const scoreElem = document.getElementById('quiz-score');
+    const restartBtn = document.getElementById('quiz-restart');
 
     function showQuestion() {
-      scoreEl.textContent = `Question ${current+1} of ${quizData.length}`;
-      questionEl.textContent = quizData[current].question;
-      optionsEl.innerHTML = '';
-      feedbackEl.textContent = '';
-      quizData[current].options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = opt;
-        btn.onclick = () => selectOption(idx);
-        optionsEl.appendChild(btn);
-      });
+      if (currentQuestion < quizQuestions.length) {
+        const q = quizQuestions[currentQuestion];
+        questionElem.textContent = `Q${currentQuestion+1}: ${q.question}`;
+        optionsElem.innerHTML = '';
+        feedbackElem.textContent = '';
+        scoreElem.textContent = `Score: ${score} / ${quizQuestions.length}`;
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-option';
+          btn.textContent = opt;
+          btn.onclick = () => selectAnswer(idx);
+          optionsElem.appendChild(btn);
+        });
+      } else {
+        endQuiz();
+      }
     }
 
-    function selectOption(idx) {
-      const correct = quizData[current].answer;
-      Array.from(optionsEl.children).forEach((btn, i) => {
-        btn.disabled = true;
-        if(i === correct) btn.style.border = '2px solid #62d84e';
-        if(i === idx && idx !== correct) btn.style.border = '2px solid #e74c3c';
-      });
-      if(idx === correct) {
-        feedbackEl.textContent = 'Correct! 🎉';
+    function selectAnswer(selectedIdx) {
+      const q = quizQuestions[currentQuestion];
+      Array.from(optionsElem.children).forEach(btn => btn.disabled = true);
+      if (selectedIdx === q.answer) {
+        feedbackElem.textContent = "Correct! 🧞";
         score++;
       } else {
-        feedbackEl.textContent = `Incorrect. The correct answer is: ${quizData[current].options[correct]}`;
+        feedbackElem.textContent = `Incorrect. The correct answer is: ${q.options[q.answer]}`;
       }
+      scoreElem.textContent = `Score: ${score} / ${quizQuestions.length}`;
       setTimeout(() => {
-        current++;
-        if(current < quizData.length) {
-          showQuestion();
-        } else {
-          showScore();
-        }
-      }, 1400);
+        currentQuestion++;
+        showQuestion();
+      }, 1200);
     }
 
-    function showScore() {
-      questionEl.textContent = 'Quiz Complete!';
-      optionsEl.innerHTML = '';
-      feedbackEl.textContent = '';
-      scoreEl.textContent = `Your Score: ${score} / ${quizData.length}`;
+    function endQuiz() {
+      quizEnded = true;
+      questionElem.textContent = "Quiz Complete!";
+      optionsElem.innerHTML = '';
+      feedbackElem.textContent = '';
+      scoreElem.textContent = `Final Score: ${score} / ${quizQuestions.length}`;
       restartBtn.style.display = 'inline-block';
     }
 
     restartBtn.onclick = () => {
-      current = 0;
+      currentQuestion = 0;
       score = 0;
+      quizEnded = false;
       restartBtn.style.display = 'none';
       showQuestion();
     };
 
-    // Start quiz
+    // Start the quiz
     showQuestion();
   </script>
 </body>
